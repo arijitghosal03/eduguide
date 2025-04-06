@@ -45,7 +45,7 @@ const Header = () => {
               <Button variant="ghost" className="relative h-8 w-8 rounded-full">
                 <Avatar className="h-8 w-8">
                   <AvatarImage
-                    src={profileDetails.profileImage}
+                    src={profileDetails.profileImage || currentUser.avatar}
                     alt={currentUser.name}
                   />
                   <AvatarFallback>
