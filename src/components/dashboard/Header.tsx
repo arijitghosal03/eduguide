@@ -14,7 +14,7 @@ import { Link } from "react-router-dom";
 import { currentUser } from "../../data/mockData";
 
 const Header = () => {
-  const handleLogout = useAuthStore((state) => state.handleLogout);
+  const { handleLogout, profileDetails } = useAuthStore();
 
   return (
     <header className="sticky top-0 z-30 w-full bg-white/95 backdrop-blur-sm border-b border-gray-200">
@@ -45,7 +45,7 @@ const Header = () => {
               <Button variant="ghost" className="relative h-8 w-8 rounded-full">
                 <Avatar className="h-8 w-8">
                   <AvatarImage
-                    src={currentUser.avatar}
+                    src={profileDetails.profileImage}
                     alt={currentUser.name}
                   />
                   <AvatarFallback>

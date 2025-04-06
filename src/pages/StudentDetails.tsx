@@ -3,12 +3,11 @@ import Sidebar from "@/components/dashboard/Sidebar";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
-import { Textarea } from "@/components/ui/textarea";
 import { UserService } from "@/services";
 import { useAuthStore } from "@/store/authStore";
 import { fireToast } from "@/utils/toast";
 import { ChevronRight } from "lucide-react";
-import { useState } from "react";
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 const StudentDetails = () => {
@@ -21,6 +20,9 @@ const StudentDetails = () => {
     subjects: "",
   });
 
+  const [imagePreview, setImagePreview] = useState<string | null>(null);
+  const [imageFile, setImageFile] = useState<File | null>(null);
+
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
   const { firebaseUser, setProfileDetails } = useAuthStore();
@@ -31,19 +33,36 @@ const StudentDetails = () => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
+  const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (file) {
+      setImageFile(file);
+      setImagePreview(URL.createObjectURL(file));
+    }
+  };
+
+  // TODO: Replace this with actual Firebase/Cloudinary upload logic
+  const imageUpload = async (file: File): Promise<string> => {
+    return await UserService.uploadProfileImage(file);
+  };
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-
     setLoading(true);
 
     try {
+      const imageUrl = await imageUpload(imageFile);
+      console.log(imageUrl);
       const payload = {
         ...formData,
         uid: firebaseUser.uid,
         subjects: formData.subjects.split(","),
+        profileImage: imageUrl,
       };
+
       await UserService.createUser(payload);
       fireToast({ message: "User Profile Completed", type: "success" });
+
       delete payload.uid;
       setProfileDetails(payload);
       navigate("/dashboard");
@@ -71,6 +90,24 @@ const StudentDetails = () => {
                 </h1>
 
                 <form onSubmit={handleSubmit} className="space-y-5">
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-1">
+                      Profile Image
+                    </label>
+                    <Input
+                      type="file"
+                      accept="image/*"
+                      onChange={handleImageChange}
+                    />
+                    {imagePreview && (
+                      <img
+                        src={imagePreview}
+                        alt="Preview"
+                        className="mt-2 w-32 h-32 object-cover rounded-full border"
+                      />
+                    )}
+                  </div>
+
                   <div>
                     <label className="block text-sm font-medium text-gray-700 mb-1">
                       Full Name
@@ -154,8 +191,8 @@ const StudentDetails = () => {
                       className="flex items-center gap-2 bg-indigo-600 hover:bg-indigo-700 text-white"
                       disabled={loading}
                     >
-                      Save & Continue
-                      <ChevronRight className="w-4 h-4" />
+                      {loading ? "Saving..." : "Save & Continue"}
+                      {!loading && <ChevronRight className="w-4 h-4" />}
                     </Button>
                   </div>
                 </form>

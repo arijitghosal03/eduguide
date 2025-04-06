@@ -17,6 +17,7 @@ interface IProfileDetails {
   school: string;
   academicYear: string;
   subjects: string[];
+  profileImage: string;
 }
 
 interface IAuthStore {
