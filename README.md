@@ -59,6 +59,21 @@ Problem Statement: We are solving "Uneven Access to Quality Education in the Dig
 - **Project Assistance**: AI-guided research with relevant articles and resources
 
 ## 🛠️ Installation & Setup
+# Clone the repository
+git clone https://github.com/arijitghosal03/eduguide.git
+
+# Navigate to project directory
+cd eduguide
+
+# Install dependencies
+npm install
+
+# Set up environment variables
+cp .env.example .env
+# Edit .env with your Firebase configuration
+
+# Run the development server
+npm run dev
 
 ## 📊 Contributing
 
@@ -68,6 +83,3 @@ Contributions are welcome! Please feel free to submit a Pull Request.
 
 This project is licensed under the MIT License - see the LICENSE file for details.
 
-## 👥 Contact
-
-For any inquiries or support, please reach out to [your-email@example.com](mailto:your-email@example.com)
