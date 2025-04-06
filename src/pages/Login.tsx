@@ -1,35 +1,49 @@
-
-import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { useState } from "react";
 import { toast } from "@/components/ui/use-toast";
+import { useAuthStore } from "@/store/authStore";
+import { fireToast } from "@/utils/toast";
+import { useEffect, useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
 
 const Login = () => {
+  const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
+  const { needsProfileCompletion, authError, firebaseLogin } = useAuthStore();
 
-  const handleSubmit = (e: React.FormEvent) => {
+  // If Auth Error
+  useEffect(() => {
+    if (!authError) return;
+    fireToast({ message: authError, type: "error" });
+  }, [authError]);
+
+  // If Profile needs completion
+  useEffect(() => {
+    if (needsProfileCompletion === null) return;
+    if (needsProfileCompletion == true) {
+      setTimeout(() => {
+        navigate("/student-details");
+      }, 3000);
+    }
+  }, [needsProfileCompletion]);
+
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    
+    setLoading(true);
+
     if (!email || !password) {
-      toast({
-        title: "Error",
-        description: "Please fill in all fields",
-        variant: "destructive"
-      });
+      fireToast({ message: "Please fill in all fields", type: "error" });
       return;
     }
-    
-    setLoading(true);
-    
-    // Simulate login API call
-    setTimeout(() => {
-      setLoading(false);
-      // For demo purposes, redirect to home
-      window.location.href = "/home";
-    }, 1000);
+
+    const isLoginSuccess = await firebaseLogin(email, password);
+
+    if (isLoginSuccess) {
+      fireToast({ message: "User logged in", type: "error" });
+    }
+    setLoading(false);
   };
 
   return (
@@ -51,7 +65,10 @@ const Login = () => {
 
           <form onSubmit={handleSubmit} className="space-y-4">
             <div className="space-y-2">
-              <label htmlFor="email" className="block text-sm font-medium text-gray-700">
+              <label
+                htmlFor="email"
+                className="block text-sm font-medium text-gray-700"
+              >
                 Email address
               </label>
               <Input
@@ -66,10 +83,16 @@ const Login = () => {
 
             <div className="space-y-2">
               <div className="flex items-center justify-between">
-                <label htmlFor="password" className="block text-sm font-medium text-gray-700">
+                <label
+                  htmlFor="password"
+                  className="block text-sm font-medium text-gray-700"
+                >
                   Password
                 </label>
-                <Link to="/forgot-password" className="text-sm text-eduBlue hover:underline">
+                <Link
+                  to="/forgot-password"
+                  className="text-sm text-eduBlue hover:underline"
+                >
                   Forgot password?
                 </Link>
               </div>

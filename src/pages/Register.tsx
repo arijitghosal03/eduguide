@@ -1,52 +1,65 @@
-
-import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { useState } from "react";
 import { toast } from "@/components/ui/use-toast";
+import { useAuthStore } from "@/store/authStore";
+import { fireToast } from "@/utils/toast";
+import { useEffect, useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
 
 const Register = () => {
+  const navigate = useNavigate();
+
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
- 
-  const [loading, setLoading] = useState(false);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const [loading, setLoading] = useState(false);
+  const { needsProfileCompletion, authError, firebaseRegistration } =
+    useAuthStore();
+
+  // If Auth Error
+  useEffect(() => {
+    if (!authError) return;
+    fireToast({ message: authError, type: "error" });
+  }, [authError]);
+
+  // If Profile needs completion
+  useEffect(() => {
+    if (needsProfileCompletion === null) return;
+    if (needsProfileCompletion == true) {
+      setTimeout(() => {
+        navigate("/student-details");
+      }, 3000);
+    }
+  }, [needsProfileCompletion]);
+
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    
-    if (!name || !email || !password || !confirmPassword ) {
-      toast({
-        title: "Error",
-        description: "Please fill in all fields",
-        variant: "destructive"
-      });
-      return;
-    }
-    
-    if (password !== confirmPassword) {
-      toast({
-        title: "Error",
-        description: "Passwords do not match",
-        variant: "destructive"
-      });
-      return;
-    }
-    
+
     setLoading(true);
-    
-    // Simulate registration API call
-    setTimeout(() => {
+    if (!name || !email || !password || !confirmPassword) {
+      fireToast({ message: "Please fill in all fields", type: "error" });
+
       setLoading(false);
-      toast({
-        title: "Account created",
-        description: "You have successfully registered",
-      });
-      // For demo purposes, redirect to dashboard
-      window.location.href = "/student-details";
-    }, 1000);
+      return;
+    }
+
+    if (password !== confirmPassword) {
+      fireToast({ message: "Passwords do not match", type: "error" });
+      setLoading(false);
+    }
+
+    // Actual Auth
+    const isRegSuccess = await firebaseRegistration(email, password);
+
+    if (isRegSuccess) {
+      fireToast({ message: "Sucecessfully Signed Up", type: "success" });
+    }
+
+    setLoading(false);
+
+    // window.location.href = "/student-details";
   };
 
   return (
@@ -63,12 +76,17 @@ const Register = () => {
               </span>
             </Link>
             <h1 className="text-2xl font-bold mt-6 mb-2">Create an account</h1>
-            <p className="text-gray-600">Start your educational journey with EduGuide AI</p>
+            <p className="text-gray-600">
+              Start your educational journey with EduGuide AI
+            </p>
           </div>
 
           <form onSubmit={handleSubmit} className="space-y-4">
             <div className="space-y-2">
-              <label htmlFor="name" className="block text-sm font-medium text-gray-700">
+              <label
+                htmlFor="name"
+                className="block text-sm font-medium text-gray-700"
+              >
                 Full name
               </label>
               <Input
@@ -82,7 +100,10 @@ const Register = () => {
             </div>
 
             <div className="space-y-2">
-              <label htmlFor="email" className="block text-sm font-medium text-gray-700">
+              <label
+                htmlFor="email"
+                className="block text-sm font-medium text-gray-700"
+              >
                 Email address
               </label>
               <Input
@@ -95,10 +116,11 @@ const Register = () => {
               />
             </div>
 
-
-
             <div className="space-y-2">
-              <label htmlFor="password" className="block text-sm font-medium text-gray-700">
+              <label
+                htmlFor="password"
+                className="block text-sm font-medium text-gray-700"
+              >
                 Password
               </label>
               <Input
@@ -112,7 +134,10 @@ const Register = () => {
             </div>
 
             <div className="space-y-2">
-              <label htmlFor="confirmPassword" className="block text-sm font-medium text-gray-700">
+              <label
+                htmlFor="confirmPassword"
+                className="block text-sm font-medium text-gray-700"
+              >
                 Confirm password
               </label>
               <Input

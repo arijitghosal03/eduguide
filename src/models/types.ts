@@ -1,9 +1,8 @@
-
 export interface User {
   id: string;
   name: string;
   email: string;
-  role: 'student' | 'parent' | 'teacher';
+  role: "student" | "parent" | "teacher";
   grade?: string;
   school?: string;
   avatar?: string;
@@ -23,7 +22,7 @@ export interface Assignment {
   title: string;
   subjectId: string;
   dueDate: string;
-  status: 'pending' | 'submitted' | 'graded';
+  status: "pending" | "submitted" | "graded";
   grade?: string;
   description: string;
   attachments?: string[];
@@ -40,7 +39,7 @@ export interface StudySession {
 
 export interface Message {
   id: string;
-  sender: 'user' | 'assistant';
+  sender: "user" | "assistant";
   content: string;
   timestamp: string;
 }
