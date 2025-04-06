@@ -1,73 +1,85 @@
-# Welcome to your Lovable project
+# EduGuide - AI-Powered Study Management Platform
+Project submission for GDG Solution Challenge 2025 
 
-## Project info
+EduGuide is an innovative AI-powered web application designed to bridge the gap between students, parents, and teachers by providing a comprehensive study management platform with intelligent monitoring and assistance features.
 
-**URL**: https://lovable.dev/projects/1ba2935e-bf39-441b-a385-d88c4b7f0257
+Problem Statement: We are solving "Uneven Access to Quality Education in the Digital Age!"
 
-## How can I edit this code?
+## 🚀 Features
 
-There are several ways of editing your application.
+### For Students
+- **Personalized Dashboard**: Easy access to subjects, assignments, and study resources
+- **Study Session Management**: Create and follow customized study schedules
+- **Subject Organization**: Categories with tags (tuition, school, urgent, easy, etc.)
+- **Learning Resources**: Access to YouTube videos, PDF materials, and online meetings
+- **AI-Generated Summaries**: Quick revision materials automatically generated
+- **Assignments & Assessments**: Track performance with timed assignments
+- **AI Chat Assistant**: Get help with subjects and navigate the app with ease
 
-**Use Lovable**
+### For Parents & Teachers
+- **Progress Tracking**: Monitor student's learning progress and achievements
+- **Assignment Creation**: Create custom assignments or use AI-generated ones
+- **Study Monitoring**: View detailed reports on study time and performance
+- **AI Insights**: Receive AI-generated insights about student's strengths and areas for improvement
+- **Presence Monitoring**: Track student's attention and engagement during study sessions
 
-Simply visit the [Lovable Project](https://lovable.dev/projects/1ba2935e-bf39-441b-a385-d88c4b7f0257) and start prompting.
+### Advanced Features
+- **Face Detection**: Uses webcam to ensure student presence during study sessions
+- **Screen Monitoring**: Tracks student's screen activity during designated study time
+- **Personalized AI Assistant**: AI chatbot fine-tuned to each student's learning data
 
-Changes made via Lovable will be committed automatically to this repo.
+## 📱 Application Architecture
 
-**Use your preferred IDE**
+### Tech Stack
+- **Frontend**: Vite + React
+- **Styling**: Tailwind CSS
+- **State Management**: Zustand
+- **Backend & Authentication**: Firebase
+- **Face Detection**: Face-api.js
+- **AI Assistant**: Custom implementation
 
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
+### Application Flow
+1. Student registers with personal details (age, class, subjects, school, exams)
+2. Profile setup and customization
+3. Dashboard access with subject categorization
+4. For each subject:
+   - **Learn**: Access video content, PDFs, and live meetings
+   - **Revise**: View AI-generated chapter summaries
+   - **Assignment**: Complete timed tasks and track performance
 
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
+### UI Structure
+- **Landing Page**: Navbar, features showcase, registration CTA, waitlist form
+- **Student Homepage**: Quick access dashboard with profile button
+- **Subject Pages**: Learn, Revise, and Assignment sections
+- **Profile Page**: Personal details, progress statistics, settings
+- **AI Assistant Interface**: Chat interface accessible throughout the app
 
-Follow these steps:
+## 🔮 Future Developments
+- **Peer Collaboration**: Chat with classmates for collaborative learning
+- **Project Assistance**: AI-guided research with relevant articles and resources
 
-```sh
-# Step 1: Clone the repository using the project's Git URL.
-git clone <YOUR_GIT_URL>
+## 🛠️ Installation & Setup
+# Clone the repository
+git clone https://github.com/arijitghosal03/eduguide.git
 
-# Step 2: Navigate to the project directory.
-cd <YOUR_PROJECT_NAME>
+# Navigate to project directory
+cd eduguide
 
-# Step 3: Install the necessary dependencies.
-npm i
+# Install dependencies
+npm install
 
-# Step 4: Start the development server with auto-reloading and an instant preview.
+# Set up environment variables
+cp .env.example .env
+# Edit .env with your Firebase configuration
+
+# Run the development server
 npm run dev
-```
 
-**Edit a file directly in GitHub**
+## 📊 Contributing
 
-- Navigate to the desired file(s).
-- Click the "Edit" button (pencil icon) at the top right of the file view.
-- Make your changes and commit the changes.
+Contributions are welcome! Please feel free to submit a Pull Request.
 
-**Use GitHub Codespaces**
+## 📜 License
 
-- Navigate to the main page of your repository.
-- Click on the "Code" button (green button) near the top right.
-- Select the "Codespaces" tab.
-- Click on "New codespace" to launch a new Codespace environment.
-- Edit files directly within the Codespace and commit and push your changes once you're done.
+This project is licensed under the MIT License - see the LICENSE file for details.
 
-## What technologies are used for this project?
-
-This project is built with:
-
-- Vite
-- TypeScript
-- React
-- shadcn-ui
-- Tailwind CSS
-
-## How can I deploy this project?
-
-Simply open [Lovable](https://lovable.dev/projects/1ba2935e-bf39-441b-a385-d88c4b7f0257) and click on Share -> Publish.
-
-## Can I connect a custom domain to my Lovable project?
-
-Yes it is!
-
-To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
-
-Read more here: [Setting up a custom domain](https://docs.lovable.dev/tips-tricks/custom-domain#step-by-step-guide)

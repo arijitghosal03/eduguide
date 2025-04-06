@@ -18,6 +18,9 @@ import SubjectAssignments from "./pages/subject/SubjectAssignments";
 import SubjectLearn from "./pages/subject/SubjectLearn";
 import SubjectRevise from "./pages/subject/SubjectRevise";
 import { useAuthStore } from "./store/authStore";
+import Features from "./components/landing/Features";
+import CTA from "./components/landing/CTA";
+import Contact from "./components/landing/Footer";
 
 const App = () => {
   const initAuth = useAuthStore((state) => state.initAuth);
@@ -35,7 +38,7 @@ const App = () => {
           <Routes>
             <Route path="/subject/Layout" element={<Mathematics />} />
             <Route path="/" element={<Index />} />
-            <Route
+            <Route path="/contact" element={<Contact/>} />
               path="/student-details"
               element={
                 <ProtectedRoute>
@@ -43,6 +46,8 @@ const App = () => {
                 </ProtectedRoute>
               }
             />
+             <Route path ="/about" element={< CTA />} />
+            <Route path ="/features" element={< Features />} />
             <Route path="/chat" element={<AIAssistantApp />} />
             <Route path="/subject/SubjectLearn" element={<SubjectLearn />} />
             <Route path="/subject/SubjectRevise" element={<SubjectRevise />} />
