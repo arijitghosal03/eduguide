@@ -23,7 +23,7 @@ import {
   Settings,
 } from "lucide-react";
 import { useEffect, useState } from "react";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 
 const Home = () => {
   const { profileDetails } = useAuthStore();

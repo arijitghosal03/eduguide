@@ -1,11 +1,11 @@
 import { useAuthStore } from "@/store/authStore";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { ClimbingBoxLoader } from "react-spinners";
 
-const ProtectedRoute = ({ children }) => {
+const ProtectedRoute = ({ children, isProfileCompletionRequired }) => {
   const navigate = useNavigate();
-  const { isAuthLoading, firebaseUser } = useAuthStore();
+  const { isAuthLoading, firebaseUser, profileDetails } = useAuthStore();
 
   useEffect(() => {
     if (isAuthLoading) return;
@@ -20,9 +20,9 @@ const ProtectedRoute = ({ children }) => {
         <ClimbingBoxLoader size={40} color="#6B5AED" />
       </div>
     );
+  } else {
+    return <>{children}</>;
   }
-
-  return <>{children}</>;
 };
 
 export default ProtectedRoute;

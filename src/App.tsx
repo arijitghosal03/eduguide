@@ -4,6 +4,9 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { useEffect } from "react";
 import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
+import CTA from "./components/landing/CTA";
+import Features from "./components/landing/Features";
+import Contact from "./components/landing/Footer";
 import ProtectedRoute from "./components/utils/ProtectedRoute";
 import AIAssistantApp from "./pages/AIAssistantApp";
 import Dashboard from "./pages/Dashboard";
@@ -18,9 +21,6 @@ import SubjectAssignments from "./pages/subject/SubjectAssignments";
 import SubjectLearn from "./pages/subject/SubjectLearn";
 import SubjectRevise from "./pages/subject/SubjectRevise";
 import { useAuthStore } from "./store/authStore";
-import Features from "./components/landing/Features";
-import CTA from "./components/landing/CTA";
-import Contact from "./components/landing/Footer";
 
 const App = () => {
   const initAuth = useAuthStore((state) => state.initAuth);
@@ -38,7 +38,8 @@ const App = () => {
           <Routes>
             <Route path="/subject/Layout" element={<Mathematics />} />
             <Route path="/" element={<Index />} />
-            <Route path="/contact" element={<Contact/>} />
+            <Route path="/contact" element={<Contact />} />
+            <Route
               path="/student-details"
               element={
                 <ProtectedRoute>
@@ -46,8 +47,8 @@ const App = () => {
                 </ProtectedRoute>
               }
             />
-             <Route path ="/about" element={< CTA />} />
-            <Route path ="/features" element={< Features />} />
+            <Route path="/about" element={<CTA />} />
+            <Route path="/features" element={<Features />} />
             <Route path="/chat" element={<AIAssistantApp />} />
             <Route path="/subject/SubjectLearn" element={<SubjectLearn />} />
             <Route path="/subject/SubjectRevise" element={<SubjectRevise />} />
@@ -60,12 +61,19 @@ const App = () => {
             <Route
               path="/dashboard"
               element={
-                <ProtectedRoute>
+                <ProtectedRoute isProfileCompletionRequired={true}>
                   <Dashboard />
                 </ProtectedRoute>
               }
             />
-            <Route path="/home" element={<Home />} />
+            <Route
+              path="/home"
+              element={
+                <ProtectedRoute isProfileCompletionRequired={true}>
+                  <Home />
+                </ProtectedRoute>
+              }
+            />
             <Route path="/login" element={<Login />} />
             <Route path="/register" element={<Register />} />
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
