@@ -23,7 +23,7 @@ const StudentDetails = () => {
 
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
-  const { firebaseUser } = useAuthStore();
+  const { firebaseUser, setProfileDetails } = useAuthStore();
 
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
@@ -37,12 +37,15 @@ const StudentDetails = () => {
     setLoading(true);
 
     try {
-      await UserService.createUser({
+      const payload = {
         ...formData,
         uid: firebaseUser.uid,
         subjects: formData.subjects.split(","),
-      });
+      };
+      await UserService.createUser(payload);
       fireToast({ message: "User Profile Completed", type: "success" });
+      delete payload.uid;
+      setProfileDetails(payload);
       navigate("/dashboard");
     } catch (error) {
       fireToast({ message: "Error creating profile", type: "error" });
@@ -149,6 +152,7 @@ const StudentDetails = () => {
                     <Button
                       type="submit"
                       className="flex items-center gap-2 bg-indigo-600 hover:bg-indigo-700 text-white"
+                      disabled={loading}
                     >
                       Save & Continue
                       <ChevronRight className="w-4 h-4" />

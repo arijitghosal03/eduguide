@@ -10,13 +10,23 @@ import {
 } from "firebase/auth";
 import { create } from "zustand";
 
+interface IProfileDetails {
+  name: string;
+  rollNumber: string;
+  classGrade: string;
+  school: string;
+  academicYear: string;
+  subjects: string[];
+}
+
 interface IAuthStore {
   firebaseUser: User | null;
   authError: string | null;
   isAuthLoading: boolean;
   needsProfileCompletion: boolean | null;
+  profileDetails: IProfileDetails | null;
   initAuth: () => void;
-  setUser: (user: User) => void;
+  setProfileDetails: (profileDetails: IProfileDetails) => Promise<void>;
   firebaseRegistration: (email: string, password: string) => Promise<boolean>;
   firebaseLogin: (email: string, password: string) => Promise<boolean>;
   handleLogout: () => Promise<void>;
@@ -27,13 +37,16 @@ export const useAuthStore = create<IAuthStore>((set) => ({
   firebaseUser: null,
   isAuthLoading: true,
   authError: null,
+  profileDetails: null,
   initAuth: () => {
     onAuthStateChanged(auth, (user) => {
       set({ firebaseUser: user, isAuthLoading: false });
     });
   },
 
-  setUser: (firebaseUser: User) => set({ firebaseUser }),
+  setProfileDetails: async (profileDetails: IProfileDetails) =>
+    set({ profileDetails }),
+
   firebaseRegistration: async (email: string, password: string) => {
     try {
       const authRes = await createUserWithEmailAndPassword(
@@ -56,15 +69,19 @@ export const useAuthStore = create<IAuthStore>((set) => ({
   firebaseLogin: async (email: string, password: string) => {
     try {
       const authRes = await signInWithEmailAndPassword(auth, email, password);
-      const isRegistered = await UserService.fetchByUid(authRes.user.uid);
+      const registeredUser = await UserService.fetchByUid(authRes.user.uid);
+
+      if (registeredUser) delete registeredUser.uid;
 
       set({
         firebaseUser: authRes.user,
         authError: null,
-        needsProfileCompletion: isRegistered ? false : true,
+        needsProfileCompletion: registeredUser ? false : true,
+        profileDetails: registeredUser ? registeredUser : null,
       });
       return true;
     } catch (error: any) {
+      console.log(error);
       set({ authError: error.message });
       return false;
     }
@@ -72,6 +89,11 @@ export const useAuthStore = create<IAuthStore>((set) => ({
 
   handleLogout: async () => {
     await signOut(auth);
-    set({ firebaseUser: null, needsProfileCompletion: null, authError: null });
+    set({
+      firebaseUser: null,
+      needsProfileCompletion: null,
+      authError: null,
+      profileDetails: null,
+    });
   },
 }));
