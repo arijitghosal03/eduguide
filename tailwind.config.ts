@@ -62,6 +62,26 @@ export default {
 					'accent-foreground': 'hsl(var(--sidebar-accent-foreground))',
 					border: 'hsl(var(--sidebar-border))',
 					ring: 'hsl(var(--sidebar-ring))'
+				},
+				eduBlue: {
+					DEFAULT: '#4361EE',
+					light: '#4CC9F0',
+					dark: '#3A0CA3'
+				},
+				eduPurple: {
+					DEFAULT: '#7209B7',
+					light: '#B5179E',
+					dark: '#560BAD'
+				},
+				eduGreen: {
+					DEFAULT: '#2DC653',
+					light: '#70E000',
+					dark: '#38B000'
+				},
+				eduOrange: {
+					DEFAULT: '#FB8500',
+					light: '#FFBE0B',
+					dark: '#F48C06'
 				}
 			},
 			borderRadius: {
@@ -86,50 +106,39 @@ export default {
 						height: '0'
 					}
 				},
-				fadeIn: {
-					from: { opacity: '0' },
-					to: { opacity: '1' }
+				'fade-in': {
+					'0%': {
+						opacity: '0',
+						transform: 'translateY(10px)'
+					},
+					'100%': {
+						opacity: '1',
+						transform: 'translateY(0)'
+					}
 				},
-				slideUp: {
-					from: { transform: 'translateY(20px)', opacity: '0' },
-					to: { transform: 'translateY(0)', opacity: '1' }
+				'slide-in': {
+					'0%': {
+						transform: 'translateX(-100%)'
+					},
+					'100%': {
+						transform: 'translateX(0)'
+					}
 				},
-				shimmer: {
-					from: { backgroundPosition: '200% 0' },
-					to: { backgroundPosition: '-200% 0' }
-				},
-				pulse: {
-					'0%, 100%': { opacity: '1' },
-					'50%': { opacity: '0.5' }
-				},
-				breathe: {
-					'0%, 100%': { transform: 'scale(1)' },
-					'50%': { transform: 'scale(1.03)' }
+				'pulse-slow': {
+					'0%, 100%': {
+						opacity: '1'
+					},
+					'50%': {
+						opacity: '0.8'
+					}
 				}
 			},
 			animation: {
 				'accordion-down': 'accordion-down 0.2s ease-out',
 				'accordion-up': 'accordion-up 0.2s ease-out',
-				'fade-in': 'fadeIn 0.5s ease-out',
-				'slide-up': 'slideUp 0.5s ease-out',
-				'shimmer': 'shimmer 2s linear infinite',
-				'pulse': 'pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite',
-				'breathe': 'breathe 3s ease-in-out infinite'
-			},
-			backdropFilter: {
-				'none': 'none',
-				'blur': 'blur(8px)'
-			},
-			typography: {
-				DEFAULT: {
-					css: {
-						maxWidth: 'none',
-					},
-				},
-			},
-			boxShadow: {
-				'subtle': '0 2px 10px rgba(0, 0, 0, 0.05)',
-				'elevation': '0 4px 20px rgba(0, 0, 0, 0.08)'
+				'fade-in': 'fade-in 0.5s ease-out',
+				'slide-in': 'slide-in 0.5s ease-out',
+				'pulse-slow': 'pulse-slow 3s cubic-bezier(0.4, 0, 0.6, 1) infinite'
 			}
 		}
 	},

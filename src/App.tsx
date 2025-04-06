@@ -3,17 +3,18 @@ import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
-import { AppLayout } from "./components/layout/AppLayout";
-
-import Dashboard from "./pages/Index";
-import StudySessions from "./pages/StudySessions";
-import Tasks from "./pages/Tasks";
-import AILearning from "./pages/AILearning";
-import Reports from "./pages/Reports";
-import Classes from "./pages/Classes";
+import { BrowserRouter, Routes, Route,Navigate} from "react-router-dom";
+import Index from "./pages/Index";
+import Dashboard from "./pages/Dashboard";
+import Home from "./pages/Home";
+import Login from "./pages/Login";
+import Register from "./pages/Register";
 import NotFound from "./pages/NotFound";
-
+import Mathematics from "./pages/subject/Subject";
+import SubjectLearn from "./pages/subject/SubjectLearn";  
+import SubjectRevise from "./pages/subject/SubjectRevise";
+import SubjectAssignments from "./pages/subject/SubjectAssignments";
+import AIAssistantApp from "./pages/AIAssistantApp";
 const queryClient = new QueryClient();
 
 const App = () => (
@@ -23,36 +24,18 @@ const App = () => (
       <Sonner />
       <BrowserRouter>
         <Routes>
-          <Route path="/" element={
-            <AppLayout>
-              <Dashboard />
-            </AppLayout>
-          } />
-          <Route path="/study-sessions" element={
-            <AppLayout>
-              <StudySessions />
-            </AppLayout>
-          } />
-          <Route path="/tasks" element={
-            <AppLayout>
-              <Tasks />
-            </AppLayout>
-          } />
-          <Route path="/ai-learning" element={
-            <AppLayout>
-              <AILearning />
-            </AppLayout>
-          } />
-          <Route path="/reports" element={
-            <AppLayout>
-              <Reports />
-            </AppLayout>
-          } />
-          <Route path="/classes" element={
-            <AppLayout>
-              <Classes />
-            </AppLayout>
-          } />
+          <Route path="/subject/Layout" element={<Mathematics />} />
+          <Route path="/" element={<Index />} />
+          <Route path="/chat" element={<AIAssistantApp />} />
+          <Route path="/subject/SubjectLearn" element={<SubjectLearn />} />
+          <Route path="/subject/SubjectRevise" element={<SubjectRevise />} />
+          <Route path="/subject/SubjectAssignments" element={<SubjectAssignments />} />
+          
+          <Route path="/subject/" element={<Index />} />
+          <Route path="/dashboard" element={<Dashboard />} />
+          <Route path="/home" element={<Home />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/register" element={<Register />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>
