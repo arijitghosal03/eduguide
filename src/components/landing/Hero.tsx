@@ -39,19 +39,6 @@ const Hero = () => {
               </Button>
             </div>
 
-            <div className="pt-6">
-              <p className="text-sm text-gray-500 mb-2">Be the first to know when we launch</p>
-              <div className="flex max-w-md mx-auto lg:mx-0">
-                <input
-                  type="email"
-                  placeholder="Enter your email"
-                  className="flex-1 px-4 py-2 border border-gray-300 rounded-l focus:outline-none focus:ring-2 focus:ring-eduBlue"
-                />
-                <Button className="rounded-l-none bg-eduBlue hover:bg-eduBlue-dark">
-                  Join Waitlist
-                </Button>
-              </div>
-            </div>
           </div>
 
           <div className="w-full lg:w-1/2 relative">
