@@ -1,5 +1,5 @@
 import { userCollectionRef } from "@/firebase/collection";
-import { getDocs, query, where } from "firebase/firestore";
+import { addDoc, getDocs, query, where } from "firebase/firestore";
 
 class UserService {
   static fetchByUid = async (uid: string) => {
@@ -12,6 +12,10 @@ class UserService {
     );
 
     return users ? users[0] : null;
+  };
+
+  static createUser = async (userObj: any) => {
+    await addDoc(userCollectionRef, userObj);
   };
 }
 

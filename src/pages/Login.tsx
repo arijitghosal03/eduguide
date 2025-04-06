@@ -22,11 +22,9 @@ const Login = () => {
   // If Profile needs completion
   useEffect(() => {
     if (needsProfileCompletion === null) return;
-    if (needsProfileCompletion == true) {
-      setTimeout(() => {
-        navigate("/student-details");
-      }, 3000);
-    }
+    setTimeout(() => {
+      navigate(needsProfileCompletion ? "/student-details" : "/dashboard");
+    }, 200);
   }, [needsProfileCompletion]);
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -41,7 +39,7 @@ const Login = () => {
     const isLoginSuccess = await firebaseLogin(email, password);
 
     if (isLoginSuccess) {
-      fireToast({ message: "User logged in", type: "error" });
+      fireToast({ message: "User logged in", type: "success" });
     }
     setLoading(false);
   };

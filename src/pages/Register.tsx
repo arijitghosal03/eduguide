@@ -30,7 +30,7 @@ const Register = () => {
     if (needsProfileCompletion == true) {
       setTimeout(() => {
         navigate("/student-details");
-      }, 3000);
+      }, 200);
     }
   }, [needsProfileCompletion]);
 
@@ -54,7 +54,7 @@ const Register = () => {
     const isRegSuccess = await firebaseRegistration(email, password);
 
     if (isRegSuccess) {
-      fireToast({ message: "Sucecessfully Signed Up", type: "success" });
+      fireToast({ message: "Successfully Signed Up", type: "success" });
     }
 
     setLoading(false);

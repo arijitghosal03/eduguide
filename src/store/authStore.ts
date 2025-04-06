@@ -16,7 +16,6 @@ interface IAuthStore {
   isAuthLoading: boolean;
   needsProfileCompletion: boolean | null;
   initAuth: () => void;
-  setIsLoading: (isLoading: boolean) => void;
   setUser: (user: User) => void;
   firebaseRegistration: (email: string, password: string) => Promise<boolean>;
   firebaseLogin: (email: string, password: string) => Promise<boolean>;
@@ -26,7 +25,7 @@ interface IAuthStore {
 export const useAuthStore = create<IAuthStore>((set) => ({
   needsProfileCompletion: null,
   firebaseUser: null,
-  isAuthLoading: false,
+  isAuthLoading: true,
   authError: null,
   initAuth: () => {
     onAuthStateChanged(auth, (user) => {
@@ -34,7 +33,6 @@ export const useAuthStore = create<IAuthStore>((set) => ({
     });
   },
 
-  setIsLoading: (isAuthLoading: boolean) => set({ isAuthLoading }),
   setUser: (firebaseUser: User) => set({ firebaseUser }),
   firebaseRegistration: async (email: string, password: string) => {
     try {
@@ -67,9 +65,6 @@ export const useAuthStore = create<IAuthStore>((set) => ({
       });
       return true;
     } catch (error: any) {
-      console.log(error);
-      console.log("Here");
-
       set({ authError: error.message });
       return false;
     }
