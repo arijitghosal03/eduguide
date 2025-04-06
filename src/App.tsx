@@ -15,6 +15,7 @@ import SubjectLearn from "./pages/subject/SubjectLearn";
 import SubjectRevise from "./pages/subject/SubjectRevise";
 import SubjectAssignments from "./pages/subject/SubjectAssignments";
 import AIAssistantApp from "./pages/AIAssistantApp";
+import StudentDetails from "./pages/StudentDetails";
 const queryClient = new QueryClient();
 
 const App = () => (
@@ -26,6 +27,7 @@ const App = () => (
         <Routes>
           <Route path="/subject/Layout" element={<Mathematics />} />
           <Route path="/" element={<Index />} />
+          <Route path="/student-details" element={<StudentDetails />} />
           <Route path="/chat" element={<AIAssistantApp />} />
           <Route path="/subject/SubjectLearn" element={<SubjectLearn />} />
           <Route path="/subject/SubjectRevise" element={<SubjectRevise />} />

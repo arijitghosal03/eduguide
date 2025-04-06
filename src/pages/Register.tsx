@@ -45,7 +45,7 @@ const Register = () => {
         description: "You have successfully registered",
       });
       // For demo purposes, redirect to dashboard
-      window.location.href = "/dashboard";
+      window.location.href = "/student-details";
     }, 1000);
   };
 
