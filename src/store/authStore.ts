@@ -8,6 +8,7 @@ import {
   signOut,
   User,
 } from "firebase/auth";
+import zukeeper from "zukeeper";
 import { create } from "zustand";
 
 interface IProfileDetails {
@@ -40,8 +41,16 @@ export const useAuthStore = create<IAuthStore>((set) => ({
   authError: null,
   profileDetails: null,
   initAuth: () => {
-    onAuthStateChanged(auth, (user) => {
-      set({ firebaseUser: user, isAuthLoading: false });
+    onAuthStateChanged(auth, async (user) => {
+      const profileData = await UserService.fetchByUid(user.uid);
+
+      if (profileData) delete profileData.uid;
+
+      set({
+        firebaseUser: user,
+        isAuthLoading: false,
+        profileDetails: profileData,
+      });
     });
   },
 

@@ -211,7 +211,7 @@ const Home = () => {
                   </button>
                   <div>
                     <h1 className="text-3xl font-bold">
-                      {greeting}, {profileDetails.name}!
+                      {greeting}, {profileDetails?.name || "Some name"}!
                     </h1>
                     <p className="opacity-90 mt-1">
                       Ready for a productive {timeOfDay}?
